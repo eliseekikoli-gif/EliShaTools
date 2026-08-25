@@ -22,11 +22,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install and Run Gradle
+      - name: Download & Setup Gradle 8.4
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y gradle
-          gradle assembleDebug --no-daemon --stacktrace
+          wget -q https://services.gradle.org/distributions/gradle-8.4-bin.zip
+          unzip -q gradle-8.4-bin.zip
+          echo "$GITHUB_WORKSPACE/gradle-8.4/bin" >> $GITHUB_PATH
+
+      - name: Build APK with Gradle 8.4
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
