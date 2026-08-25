@@ -19,11 +19,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Configuration de Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Setup Gradle Wrapper
+        run: gradle wrapper
 
       - name: Compiler l'APK Debug
-        run: gradle assembleDebug
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Uploader l'APK en Artifact
         uses: actions/upload-artifact@v4
